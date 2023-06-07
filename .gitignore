@@ -1,0 +1,4 @@
+# ignore git-related files
+/.git
+# ignore VSCode files
+/.DS_Store
