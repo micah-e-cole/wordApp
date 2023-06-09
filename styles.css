@@ -38,8 +38,7 @@
   background-color: rgba(29, 88, 128, 0.404);
   color: rgb(255, 255, 255);
   padding: 2%;
-  margin-bottom: 2.75%;
-  margin-left: 2%;
+  margin: 0 2% 2.75% 2%;
   flex-wrap: wrap;
   font-size: x-large;
   border: 5px;
