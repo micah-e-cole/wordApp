@@ -11,10 +11,15 @@
   "author": "MB",
   "license": "ISC",
   "dependencies": {
+    "csv": "^6.3.1",
+    "csv-parse": "^5.4.0",
+    "csv-parser": "^3.0.0",
     "express": "^4.17.1",
+    "jquery-csv": "^1.0.21",
     "path": "^0.12.7",
-    "puppeteer": "^12.0.1",
-    "requests": "^0.3.0"
+    "puppeteer": "^20.7.1",
+    "requests": "^0.3.0",
+    "sqlite3": "^5.1.6"
   },
   "devDependencies": {
     "nodemon": "^2.0.15"
