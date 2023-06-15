@@ -7,22 +7,34 @@
  * File: ./app.js
  */
 
-// get CSV file contents
-function readFileContents(fp) {
-    const fileContent = fs.readFileSync(fp, 'utf-8');
-    const rows = fileContent.split('\n');
-    const csvData = rows.map(row => row.split(','));
-    return csvData;
-  }
 
-// file location of CSV where words are stored
-const csvFP = './random.csv';
 // assign variable the value of the newly-created array with contents from CSV
-let random_words = readFileContents(csvFP);
+let random_words = [
+    'various','cynical','leather','pleasant','heal',
+    'spore','teeth','teaching','angle','boy','striped',
+    'strengthen','tender','wax','scissors','understood',
+    'female','oafish','well-made',   'disturbed',
+    'cultured','bear','drag','jazzy','glue',
+    'hungry','shrug','religion','top','consist',
+    'distinct','gate','typical','wander','night',
+    'furry','toe','jam','cumbersome','accurate',
+    'wood','spurious','playground','guttural','periodic',
+    'deeply','tearful','used','adorable','moor',
+    'fact','plain','glistening','burst','open',
+    'scientific','high','pets','astonishing','vessel',
+    'bathe','company','ten','wrap','supply',
+    'country','cheese','list','mix','jumpy',
+    'tour','sleepy','wonder','encouraging','surprise',
+    'birds','ragged','roomy','digestion','voyage',
+    'appreciate','button','spare','concerned','quarter',
+    'cats','able','well-off','melodic','recess',
+    'chin','tire','potato','empty','laugh',
+    'side','jaded','look','momentous','hollow'
+  ];
 
-// outer variables 
-let answer = '';             // holds the value of the random word to be served to the .html 
-let maxWrong = 10;           // default game is set to easy  
+// outer variables
+let answer = '';             // holds the value of the random word to be served to the .html
+let maxWrong = 10;           // default game is set to easy
 let diff_setting = 'Easy';   // default ""
 let mistakes = 0;            // mistakes are initialized to 0
 let guessed = [];            // guessed letters are stored in an array initialized empty
@@ -30,7 +42,7 @@ let wordStatus = null;       // used to dislay current state of word to user (gu
 
 
 /**
- * function is called by generateButtons and 
+ * function is called by generateButtons and
  * handles keyboard button press events
  * on each press
  */
@@ -83,7 +95,7 @@ function checkIfGameLost() {
  */
 function guessedWord() {
     // creates array to store all individual letters
-    wordStatus = answer.split('').map(letter => (guessed.indexOf(letter) >= 0 ? letter : " _ ")).join(''); 
+    wordStatus = answer.split('').map(letter => (guessed.indexOf(letter) >= 0 ? letter : " _ ")).join('');
     // maps letters against answer and reveals the answer when correct letters passed in
     // returns the element to display to the html id wordSpotlight
     document.getElementById('wordSpotlight').innerHTML = wordStatus;
@@ -105,7 +117,7 @@ function generateButtons() {
         alphabet str is split into individual letters with split()
         each letter is mapped with a function .map(letter => ...)
             buttonsHTML write all letters as <button> elements within
-            the .html file and creates an onClick event listener that 
+            the .html file and creates an onClick event listener that
             callse handleGuess() function
     */
 
@@ -120,7 +132,7 @@ function generateButtons() {
             </button>
         `).join('');
 
-    // assigns the value of html id keyboard to buttonsHTML 
+    // assigns the value of html id keyboard to buttonsHTML
     document.getElementById('keyboard').innerHTML = buttonsHTML;
 }
 
@@ -143,11 +155,11 @@ function restart() {
  * function makes calls (similar to restart())
  * that updates the length of words that are
  * displayed to user (easy, medium, hard)
- * 
+ *
  * this function is called whenever the user
  * changes the value in the drop-down and
  * that value is passed in (difficulty)
- * @param {*} difficulty = str val, user setting  
+ * @param {*} difficulty = str val, user setting
  */
 function setDifficulty(difficulty) {
     diff_setting = difficulty;      // default 'Easy'
@@ -161,7 +173,7 @@ function setDifficulty(difficulty) {
 }
 
 // These are the initial launch functions
-randomWord(diff_setting);            // gets random word w default difficulty 
+randomWord(diff_setting);            // gets random word w default difficulty
 generateButtons();                   // ""
 guessedWord();                       // ""
 guessDifficulty(diff_setting);       // ""
@@ -180,7 +192,7 @@ function guessDifficulty(difficulty){
     }else if(difficulty == 'Hard'){
         maxWrong = 5;                       // if hard, 5 guesses
     }else{
-        maxWrong = 10;                      // else, default                 
+        maxWrong = 10;                      // else, default
     }
     // set value to HTML element
     document.getElementById('maxWrong').innerHTML = maxWrong;
@@ -206,7 +218,7 @@ function getSelection(difficulty){
     if(hard_words.length > 9){
         return hard_words;}});  // return as val hard_words: hard_game = hard_words (array)
 
-    if(difficulty == 'Easy'){           
+    if(difficulty == 'Easy'){
     return easy_game;                       // if the difficulty was set to easy, return easy array
     } else if (difficulty == 'Medium'){
     return medium_game;                     // if the difficulty was set to medium, return medium array

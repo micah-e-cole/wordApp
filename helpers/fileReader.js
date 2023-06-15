@@ -20,8 +20,8 @@ function readFileContents(fp) {
 }
 
 // location of CSV file
-// const csvFP = './random.csv';
+const csvFP = './random.csv';
 // creating a new array to hold contents
-// const contents = readFileContents(csvFP);
+const contents = readFileContents(csvFP);
 // print new array
-// console.log(contents);
+console.log(contents);
