@@ -9,7 +9,7 @@
 
 import { readFileContents } from './helpers/fileReader.js';
 
-require('./helpers/wordScraper.js');
+// require('./helpers/wordScraper.js');
 // file location of CSV where words are stored
 const csvFP = './random.csv';
 // assign variable the value of the newly-created array with contents from CSV
