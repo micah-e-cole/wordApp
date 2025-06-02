@@ -1,0 +1,15 @@
+# docker-compose.yml
+version: '3.8'
+
+services:
+  wordapp:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules  # avoid overwriting node_modules with host
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=development

@@ -1,0 +1,10 @@
+# Dockerfile.dev
+FROM node:18
+
+WORKDIR /usr/src/app
+
+COPY package*.json ./
+RUN npm install
+
+# Don't copy the rest of the app to allow live mounting
+CMD ["npm", "run", "dev"]
