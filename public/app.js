@@ -7,30 +7,12 @@
  * File: ./app.js
  */
 
-
-// assign variable the value of the newly-created array with contents from CSV
-let random_words = [
-    'various','cynical','leather','pleasant','heal',
-    'spore','teeth','teaching','angle','boy','striped',
-    'strengthen','tender','wax','scissors','understood',
-    'female','oafish','well-made',   'disturbed',
-    'cultured','bear','drag','jazzy','glue',
-    'hungry','shrug','religion','top','consist',
-    'distinct','gate','typical','wander','night',
-    'furry','toe','jam','cumbersome','accurate',
-    'wood','spurious','playground','guttural','periodic',
-    'deeply','tearful','used','adorable','moor',
-    'fact','plain','glistening','burst','open',
-    'scientific','high','pets','astonishing','vessel',
-    'bathe','company','ten','wrap','supply',
-    'country','cheese','list','mix','jumpy',
-    'tour','sleepy','wonder','encouraging','surprise',
-    'birds','ragged','roomy','digestion','voyage',
-    'appreciate','button','spare','concerned','quarter',
-    'cats','able','well-off','melodic','recess',
-    'chin','tire','potato','empty','laugh',
-    'side','jaded','look','momentous','hollow'
-  ];
+/*
+ Notes: OLD this has been replaced with fetch()
+   import random words from CSV using getWords.js
+*/
+// let textfromCSV = getWordsFromFile();
+// let random_words = textfromCSV;
 
 // outer variables
 let answer = '';             // holds the value of the random word to be served to the .html
@@ -39,6 +21,24 @@ let diff_setting = 'Easy';   // default ""
 let mistakes = 0;            // mistakes are initialized to 0
 let guessed = [];            // guessed letters are stored in an array initialized empty
 let wordStatus = null;       // used to dislay current state of word to user (guessedWord())
+
+
+// /** 
+//  * Function gets words from file: random.csv
+//  * Reads-in values in file and stores into array
+//  */
+
+// function getWordsFromFile() {
+//     // using fs file system library
+//     const fs = require('fs');
+//     // import words from file, utf-8 encoding
+//     const fileContents = fs.readFileSync('./random.csv', 'utf-8');
+//     // read file contents in to array, splitting on comma
+//     const wordArray = fileContents.split(',');
+//     // return array
+//     return wordArray;
+// }
+
 
 
 /**
@@ -161,6 +161,7 @@ function restart() {
  * that value is passed in (difficulty)
  * @param {*} difficulty = str val, user setting
  */
+
 function setDifficulty(difficulty) {
     diff_setting = difficulty;      // default 'Easy'
     mistakes = 0;                   // same as in restart() f(x)
@@ -172,11 +173,11 @@ function setDifficulty(difficulty) {
     guessDifficulty(diff_setting);  // gets and returns the drop-down difficulty setting
 }
 
-// These are the initial launch functions
-randomWord(diff_setting);            // gets random word w default difficulty
-generateButtons();                   // ""
-guessedWord();                       // ""
-guessDifficulty(diff_setting);       // ""
+// // These are the initial launch functions
+// randomWord(diff_setting);            // gets random word w default difficulty 
+// generateButtons();                   // ""
+// guessedWord();                       // ""
+// guessDifficulty(diff_setting);       // ""
 
 
 /**
@@ -184,6 +185,7 @@ guessDifficulty(diff_setting);       // ""
  * on user input in drop-down menu
  * @param {*} difficulty = str, user selection
  */
+
 function guessDifficulty(difficulty){
     if(difficulty == 'Easy'){               // if easy, return 10 guesses
         maxWrong = 10;
@@ -204,6 +206,7 @@ function guessDifficulty(difficulty){
  * @param {*} difficulty = drop-down menu selection
  * @returns array of lengths corresponding to user selection
  */
+
 function getSelection(difficulty){
     // filter for all words with a length less than 6
     let easy_game = random_words.filter((easy_words) => {
@@ -234,8 +237,38 @@ function getSelection(difficulty){
  * with a randomizing sequence
  * @param {*} diff = difficulty setting passed in from drop-down
  */
+
 function randomWord(diff) {
     var arr = getSelection(diff);                           // get array according to difficulty
     answer = arr[Math.floor(Math.random() * arr.length)];   // assigns random value from calc index to answer
 }
 
+let random_words = [];
+
+// Fetch the CSV file with words
+fetch('./random.csv')
+  .then(response => {
+    if (!response.ok) {
+      throw new Error('Network response was not ok ' + response.statusText);
+    }
+    return response.text();
+  })
+  .then(data => {
+    // Parse CSV words by splitting on commas
+    random_words = data.split(',');
+
+    // Start the game after words are loaded
+    randomWord(diff_setting);
+    generateButtons();
+    guessedWord();
+    guessDifficulty(diff_setting);
+  })
+  .catch(error => {
+    console.error('Error fetching word list:', error);
+    // Optionally, fallback to a hardcoded list if fetch fails
+    random_words = ['fallback', 'words', 'here'];
+    randomWord(diff_setting);
+    generateButtons();
+    guessedWord();
+    guessDifficulty(diff_setting);
+  });

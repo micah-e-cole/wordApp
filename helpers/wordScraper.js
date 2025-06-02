@@ -1,6 +1,10 @@
 /*
  * Name: MB
+<<<<<<<< HEAD:helpers/wordScraper.js
  * File: ./helpers/wordScraper.js
+========
+ * File: ./randomWordScraper.js
+>>>>>>>> e88c96f (containerized and optimized for terraform):public/randomWordScraper.js
  */
 
 // code to scrape words from URL
